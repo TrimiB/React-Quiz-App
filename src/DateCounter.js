@@ -3,8 +3,7 @@ import { useReducer, useState } from 'react';
 function reducer(state, action) {
   if (action.type === 'DECREMENT') return state - action.payload;
   if (action.type === 'INCREMENT') return state + action.payload;
-  if (action.type === 'SET_COUNT') return action.payload;
-  if (action.type === 'RESET-COUNT') return action.payload;
+  if (action.type === 'SET' || action.type === 'RESET-COUNT') return action.payload;
 }
 
 function DateCounter() {
