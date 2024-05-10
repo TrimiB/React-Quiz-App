@@ -1,45 +1,51 @@
-import { useReducer, useState } from 'react';
+import { useReducer } from 'react';
+
+const initialState = { count: 0, step: 1 };
 
 function reducer(state, action) {
-  if (action.type === 'DECREMENT') return state - action.payload;
-  if (action.type === 'INCREMENT') return state + action.payload;
-  if (action.type === 'SET' || action.type === 'RESET-COUNT') return action.payload;
+  switch (action.type) {
+    case 'DECREMENT':
+      return { ...state, count: state.count - state.step };
+    case 'INCREMENT':
+      return { ...state, count: state.count + state.step };
+    case 'SET-COUNT':
+      return { ...state, count: action.payload };
+    case 'SET-STEP':
+      return { ...state, step: action.payload };
+    case 'RESET':
+      // return { count: 0,  step: 1 };
+      return initialState;
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
 }
 
 function DateCounter() {
-  // const [count, setCount] = useState(0);
-  const [count, dispatch] = useReducer(reducer, 0);
-  const [step, setStep] = useState(1);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { count, step } = state;
 
   // This mutates the date object.
   const date = new Date('june 21 2027');
   date.setDate(date.getDate() + count);
 
   const dec = function () {
-    // setCount((count) => count - 1);
-    // setCount((count) => count - step);
-    dispatch({ type: 'DECREMENT', payload: 1 });
+    dispatch({ type: 'DECREMENT' });
   };
 
   const inc = function () {
-    // setCount((count) => count + 1);
-    // setCount((count) => count + step);
-    dispatch({ type: 'INCREMENT', payload: 1 });
+    dispatch({ type: 'INCREMENT' });
   };
 
   const defineCount = function (e) {
-    // setCount(Number(e.target.value));
-    dispatch({ type: 'SET', payload: Number(e.target.value) });
+    dispatch({ type: 'SET-COUNT', payload: Number(e.target.value) });
   };
 
   const defineStep = function (e) {
-    setStep(Number(e.target.value));
+    dispatch({ type: 'SET-STEP', payload: Number(e.target.value) });
   };
 
   const reset = function () {
-    // setCount(0);
-    dispatch({ type: 'RESET-COUNT', payload: 0 });
-    setStep(1);
+    dispatch({ type: 'RESET' });
   };
 
   return (
