@@ -13,7 +13,6 @@ function reducer(state, action) {
     case 'SET-STEP':
       return { ...state, step: action.payload };
     case 'RESET':
-      // return { count: 0,  step: 1 };
       return initialState;
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
