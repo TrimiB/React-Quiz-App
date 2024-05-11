@@ -1,8 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import Header from './Header';
 import Main from './Main';
 
+const initialState = {
+  questions: [],
+
+  // 'loading', 'error', 'ready', 'active', 'finished'
+  status: 'loading',
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'dataRecieved':
+      return { ...state, questions: action.payload, status: 'ready' };
+    case 'dataFailed':
+      return { ...state, status: 'error' };
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
+}
+
 export default function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -13,8 +33,10 @@ export default function App() {
         const data = await response.json();
         console.log(data);
         // setQuestions(data);
+        dispatch({ type: 'dataRecieved', payload: data });
       } catch (error) {
-        console.error('Error fetching questions:', error);
+        // console.error('Error fetching questions:', error);
+        dispatch({ type: 'dataFailed' });
       }
     }
     fetchQuestions();
