@@ -45,6 +45,14 @@ function reducer(state, action) {
         status: 'finished',
         highscore: state.points > state.highscore ? state.points : state.highscore,
       };
+    case 'reset':
+      return {
+        ...state,
+        status: 'ready',
+        index: 0,
+        answer: null,
+        points: 0,
+      };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -104,11 +112,14 @@ export default function App() {
           </>
         )}
         {status === 'finished' && (
-          <FinishScreen
-            points={points}
-            maxPossiblePoints={maxPossiblePoints}
-            highscore={highscore}
-          />
+          <>
+            <FinishScreen
+              points={points}
+              maxPossiblePoints={maxPossiblePoints}
+              highscore={highscore}
+            />
+            <NextButton status={status} dispatch={dispatch} />
+          </>
         )}
       </Main>
     </div>
