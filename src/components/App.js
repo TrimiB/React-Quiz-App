@@ -38,6 +38,11 @@ function reducer(state, action) {
       };
     case 'nextQuestion':
       return { ...state, index: state.index + 1, answer: null };
+    case 'finished':
+      return {
+        ...state,
+        status: 'finished',
+      };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -88,7 +93,12 @@ export default function App() {
               answer={answer}
             />
             <Question question={questions[index]} answer={answer} dispatch={dispatch} />
-            <NextButton dispatch={dispatch} answer={answer} />
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              numQuestions={numQuestions}
+              index={index}
+            />
           </>
         )}
         {status === 'finished' && (
