@@ -1,4 +1,4 @@
-function FinnishScreen({ points, maxPossiblePoints }) {
+function FinnishScreen({ points, maxPossiblePoints, highscore }) {
   const procentage = Math.ceil((points / maxPossiblePoints) * 100);
 
   let emoji;
@@ -15,9 +15,12 @@ function FinnishScreen({ points, maxPossiblePoints }) {
   if (procentage === 0) emoji = '🤦‍♂️';
 
   return (
-    <p className='result'>
-      <span>{emoji}</span> You scored {points} out of {maxPossiblePoints} points. {procentage}%
-    </p>
+    <>
+      <p className='result'>
+        <span>{emoji}</span> You scored {points} out of {maxPossiblePoints} points. {procentage}%
+      </p>
+      <p className='highscore'>highscore: {highscore} points</p>
+    </>
   );
 }
 
