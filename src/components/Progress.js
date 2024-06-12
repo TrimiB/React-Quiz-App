@@ -1,4 +1,7 @@
-function Progress({ index, numQuestions, points, maxPossiblePoints, answer }) {
+import { useQuestions } from '../context/QuestionsProvider';
+
+function Progress() {
+  const { index, numQuestions, points, maxPossiblePoints, answer } = useQuestions();
   return (
     <header className='progress'>
       <progress value={index + Number(answer !== null)} max={numQuestions} />
