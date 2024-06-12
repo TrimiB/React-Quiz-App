@@ -1,4 +1,8 @@
-function NextButton({ dispatch, answer, numQuestions, index, status }) {
+import { useQuestions } from '../context/QuestionsProvider';
+
+function NextButton() {
+  const { answer, numQuestions, index, status, dispatch } = useQuestions();
+
   if (answer === null) return null;
 
   if (index < numQuestions - 1) {
@@ -9,7 +13,7 @@ function NextButton({ dispatch, answer, numQuestions, index, status }) {
     );
   }
 
-  if (index === numQuestions - 1) {
+  if (index === numQuestions - 1 && status === 'active') {
     return (
       <button className='btn btn-ui' onClick={() => dispatch({ type: 'finished' })}>
         Finish
