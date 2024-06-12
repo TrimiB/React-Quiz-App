@@ -1,4 +1,8 @@
-function FinnishScreen({ points, maxPossiblePoints, highscore }) {
+import { useQuestions } from '../context/QuestionsProvider';
+
+function FinnishScreen() {
+  const { points, maxPossiblePoints, highscore } = useQuestions();
+
   const procentage = Math.ceil((points / maxPossiblePoints) * 100);
 
   let emoji;
